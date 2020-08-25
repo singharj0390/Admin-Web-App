@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -19,47 +20,50 @@ import lombok.Data;
 
 
 @Entity
-@Table(name = "User_Account")
+@Table(name = "user_account")
 @Data
 public class UserAccountEntity implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 			@Id
-             @Column(name = "User_Id")
-			@GeneratedValue
+             @Column(name = "user_Id")
+			@GeneratedValue(strategy = GenerationType.IDENTITY)
 	         private Integer uId;
              
-             @Column(name = "First_Name")
-             private String userFirstName;
+             @Column(name = "first_name")
+             private String firstName;
              
-             @Column(name = "Last_Name")
-             private String userLastName;
+             @Column(name = "last_name")
+             private String lastName;
              
-             @Column(name = "Email")
-             private String userEmail;
+             @Column(name = "email")
+             private String email;
              
-             @Column(name = "Temp_Password")
-             private String tempPassword;
-             
-             @Column(name = "Account_Status")
+             @Column(name = "account_status")
              private String accStatus;
              
-             @Column(name = "Gender")
+             @Column(name = "temp_password")
+             private String tempPassword;
+            
+             @Column(name = "gender")
              private String gender;
              
-             @Column(name = "Role_Id")
+             @Column(name = "role_id")
              private Integer roleId;
              
-             @Column(name = "Created_Date")
+             @Column(name = "created_date")
              @CreationTimestamp
              @Temporal(TemporalType.DATE)
              private Date createdDate;
              
-             @Column(name = "Updated_Date")
+             @Column(name = "updated_date")
              @UpdateTimestamp
              @Temporal(TemporalType.DATE)
              private Date updatedDate;
+             
+             @Column(name = "switch_delete")
+             private String switchDelete;
              
              
 }

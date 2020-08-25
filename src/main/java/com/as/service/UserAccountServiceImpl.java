@@ -1,9 +1,13 @@
 package com.as.service;
 
+
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,13 +38,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 		userAcc.setAccStatus(AppConstants.LOCKED_STR);
 		
 		UserAccountEntity entity = new UserAccountEntity();
-		entity.setUserFirstName(userAcc.getFirstName());
-		entity.setUserLastName(userAcc.getLastName());
-		entity.setUserEmail(userAcc.getEmail());
-		entity.setTempPassword(userAcc.getTempPassword());
-		entity.setAccStatus(userAcc.getAccStatus());
-		entity.setGender(userAcc.getGender());
-		entity.setRoleId(userAcc.getRoleId());
+		BeanUtils.copyProperties(userAcc, entity);
 		
 	UserAccountEntity savedEntity =  uAccRepo.save(entity);
 	if(savedEntity.getUId()!=null) {
@@ -57,6 +55,27 @@ public class UserAccountServiceImpl implements UserAccountService {
 	    	roleMap.put(roleEntity.getRoleId(), roleEntity.getRole());
 	    });
 		return roleMap;
+	}
+
+	@Override
+	public List<UserAccount> getAllAccounts() {
+		List<UserAccountEntity> entities = uAccRepo.findAll();
+		
+		/*
+		 * return entities.stream().map(entity -> { UserAccount account = new
+		 * UserAccount(); BeanUtils.copyProperties(entity, account); return account;
+		 * }).collect(Collectors.toList());
+		 */
+		
+		List<UserAccount>  accounts = new ArrayList<UserAccount>();
+		for (UserAccountEntity entity : entities) {
+			UserAccount account = new UserAccount();
+			BeanUtils.copyProperties(entity, account);
+			accounts.add(account);
+		}
+		
+		return accounts;
+		
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.as.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,12 @@ public class UserAccountController {
 	        public String handleSubmitBtn(@ModelAttribute("userAcc") UserAccount uAcc, Model model) {
 	        	boolean isSaved = uAccService.createAccount(uAcc);
 	        	return "userAccCreationSuccess";
+	        }
+	        
+	        @GetMapping("/viewAccounts")
+	        public String handleViewAccountLink(Model model) {
+	        	List<UserAccount> accountList = uAccService.getAllAccounts();
+	        	model.addAttribute("accounts", accountList);
+	        	return "viewAccounts";
 	        }
 }

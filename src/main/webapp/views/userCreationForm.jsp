@@ -33,8 +33,8 @@
                           <tr>
                                <th>Gender :</th>
                                <td>
-                                   <form:radiobutton path="gender" value="M" id="gen"/>
-                                   <form:radiobutton path="gender" value="F" id="gen" />
+                                   Male:<form:radiobutton path="gender" value="M" id="gen"/>
+                                   Female:<form:radiobutton path="gender" value="F" id="gen" />
                                </td>
                           </tr>
                           <tr>
@@ -54,5 +54,7 @@
                           </tr>
                    </table>
              </form:form>
+             
+             
 </body>
 </html>
