@@ -9,6 +9,6 @@
 <body>
       <h1>Thank you for creating account here.To unlock your account please click on the link which we have sent to your mail id </h1>
       
-      <a href="viewAccounts">View Accounts</a>
+      <a href="loadForm">Go Back</a>
 </body>
 </html>

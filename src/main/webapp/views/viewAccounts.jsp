@@ -8,7 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-        <table border="1">
+              <h1 align="center">View Accounts</h1>
+        <table border="1" align="center">
                <thead>
                       <tr>
                             <th>S.No.</th>
