@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import com.as.constants.AppConstants;
 import com.as.entities.RoleMasterEntity;
 import com.as.entities.UserAccountEntity;
+import com.as.model.RoleMaster;
+import com.as.model.UnlockAccount;
 import com.as.model.UserAccount;
 import com.as.repositories.RoleRepository;
 import com.as.repositories.UserAccountRepository;
@@ -34,14 +37,17 @@ public class UserAccountServiceImpl implements UserAccountService {
 	
 	@Override
 	public boolean createAccount(UserAccount userAcc) {
-		userAcc.setTempPassword(PwdUtils.generateTempPwd(AppConstants.TEMP_PWD_LENGTH));  
+		userAcc.setTempPwd(PwdUtils.generateTempPwd(AppConstants.TEMP_PWD_LENGTH));
 		userAcc.setAccStatus(AppConstants.LOCKED_STR);
+		if(userAcc.getUserId()==null) {
+			userAcc.setSwitchDelete("Y");
+		}
 		
 		UserAccountEntity entity = new UserAccountEntity();
 		BeanUtils.copyProperties(userAcc, entity);
 		
 	UserAccountEntity savedEntity =  uAccRepo.save(entity);
-	if(savedEntity.getUId()!=null) {
+	if(savedEntity.getUserId()!=null) {
 		return emailUtils.sendUserAccUnlockEmail(userAcc);
 	}
 	return false;
@@ -77,5 +83,75 @@ public class UserAccountServiceImpl implements UserAccountService {
 		return accounts;
 		
 	}
+
+	@Override
+	public UserAccount getAccountById(Integer id) {
+		Optional<UserAccountEntity> findById = uAccRepo.findById(id);
+		if(findById.isPresent()) {
+			UserAccountEntity entity = findById.get();
+			UserAccount account = new UserAccount();
+			BeanUtils.copyProperties(entity, account);
+			return account;
+		}
+		return null;
+	}
+
+	@Override
+	public RoleMaster getRoleById(Integer roleId) {
+		Optional<RoleMasterEntity> findById = roleRepo.findById(roleId);
+		if(findById.isPresent()) {
+			RoleMasterEntity entity = findById.get();
+			RoleMaster role = new RoleMaster();
+			BeanUtils.copyProperties(entity, role);
+			return role;
+		}
+		return null;
+	}
+
+	@Override
+	public boolean deleteAccount(Integer id) {
+		
+		return false;
+	}
+
+	@Override
+	public boolean updateAccount(UserAccount account) {
+		UserAccountEntity entity = new UserAccountEntity();
+		
+		BeanUtils.copyProperties(account, entity);
+	UserAccountEntity savedEntity =  uAccRepo.save(entity);
+	if (savedEntity!=null) {
+		return savedEntity.getUserId()!=null;
+	}
+		return false;
+	}
+
+	@Override
+	public boolean updateTempPassword(UnlockAccount unlockAcc) {
+		
+		return false;
+	}
+
+	
+	  @Override 
+	  public UserAccount getAccountByTempPwd(String tempPwd) {
+		  UserAccountEntity entity = uAccRepo.findAccountByTempPwd(tempPwd);
+		  if (entity!=null) {
+			  UserAccount account = new UserAccount();
+			  BeanUtils.copyProperties(entity, account);
+			  return account;
+		}
+	  return null; 
+	  }
+	 
+
+	/*
+	 * @Override public boolean deleteAccount(Integer id) { if(id!=null) {
+	 * uAccRepo.deleteById(id); return true; } return false; }
+	 */
+	
+	
+	
+	
 
 }

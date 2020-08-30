@@ -55,7 +55,7 @@ public class EmailUtils {
 		String mailBody = sb.toString();
 		mailBody = mailBody.replace("{FNAME}", acc.getFirstName());
 		mailBody = mailBody.replace("{LNAME}", acc.getLastName());
-		mailBody = mailBody.replace("{TEMP-PWD}", acc.getTempPassword());
+		mailBody = mailBody.replace("{TEMP-PWD}", acc.getTempPwd());
 		mailBody = mailBody.replace("{EMAIL}", acc.getEmail());
 		
 		return mailBody;

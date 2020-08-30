@@ -10,7 +10,7 @@
 </head>
 <body>
         <h2>Unlock Account Here</h2>
-        <form:form action="" modelAttribute="unlockAcc" method="POST">
+        <form:form action="resetPwd" modelAttribute="unlockAcc" method="POST">
                  <table>
                        <tr>
                             <th>Your Email :</th>

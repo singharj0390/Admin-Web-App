@@ -15,6 +15,7 @@
                           <tr>
                                <th>First Name :</th>
                                <td>
+                                     <form:hidden path="userId"/>
                                     <form:input path="firstName"/>
                                </td>
                           </tr>
@@ -49,12 +50,13 @@
                           <tr>
                                <th></th>
                                <td>
-                                    <input type="submit" value="Create"/>
+                                    <input type="submit" value="Create" /><input type="submit" value="Update" formaction="updateAccount">
                                </td>
                           </tr>
                    </table>
              </form:form>
              
+             <a href="viewAccounts">View Accounts</a> 
              
 </body>
 </html>

@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -29,7 +30,7 @@ public class UserAccountEntity implements Serializable{
 			@Id
              @Column(name = "user_Id")
 			@GeneratedValue(strategy = GenerationType.IDENTITY)
-	         private Integer uId;
+	         private Integer userId;
              
              @Column(name = "first_name")
              private String firstName;
@@ -44,7 +45,7 @@ public class UserAccountEntity implements Serializable{
              private String accStatus;
              
              @Column(name = "temp_password")
-             private String tempPassword;
+             private String tempPwd;
             
              @Column(name = "gender")
              private String gender;
@@ -52,12 +53,13 @@ public class UserAccountEntity implements Serializable{
              @Column(name = "role_id")
              private Integer roleId;
              
-             @Column(name = "created_date")
+             
+             @Column(name = "created_date", updatable = false)
              @CreationTimestamp
              @Temporal(TemporalType.DATE)
              private Date createdDate;
              
-             @Column(name = "updated_date")
+             @Column(name = "updated_date", insertable = false)
              @UpdateTimestamp
              @Temporal(TemporalType.DATE)
              private Date updatedDate;

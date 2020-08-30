@@ -15,7 +15,7 @@ public class UserAccount implements Serializable{
 	        private String lastName;
 	        private String email;
 	        private String accStatus;
-	        private String tempPassword;
+	        private String tempPwd;
 	        private String gender;
 	        private Integer roleId;
 	        private Date createdDate;

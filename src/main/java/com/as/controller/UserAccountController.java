@@ -20,7 +20,7 @@ public class UserAccountController {
 	         @Autowired
 	         private UserAccountService uAccService;
 	        
-	        @GetMapping("/loadForm")
+	        @GetMapping(value= {"/loadForm","/addAccount"})
 	        public String loadForm(Model model) {
 	        	UserAccount uAcc = new UserAccount();
 	                    Map<Integer,String> roleMap =  uAccService.getAllRoles();
@@ -32,6 +32,9 @@ public class UserAccountController {
 	        @RequestMapping(value = "/userAccReg", method = RequestMethod.POST)
 	        public String handleSubmitBtn(@ModelAttribute("userAcc") UserAccount uAcc, Model model) {
 	        	boolean isSaved = uAccService.createAccount(uAcc);
+	        	if(uAcc.getUserId()!=null) {
+	        		return "userAccUpdationSuccess";
+	        	}
 	        	return "userAccCreationSuccess";
 	        }
 	        
